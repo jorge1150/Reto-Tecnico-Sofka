@@ -186,7 +186,7 @@ cd ../account-service && mvn -q test
 
 ---
 
-## Notas de diseño (para defender en entrevista)
+## Notas de diseño
 
 - **Arquitectura limpia**: capas bien separadas; dominio sin dependencias de framework.
 - **Repository + Adaptadores JPA**: permite cambiar persistencia sin impactar dominio/aplicación.
