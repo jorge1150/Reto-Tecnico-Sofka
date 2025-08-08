@@ -1,0 +1,733 @@
+{
+	"info": {
+		"_postman_id": "c4b20ca2-0940-4d39-a5bc-fff2a75973ba",
+		"name": "Reto Técnico - Microservicios (CRUD completo)",
+		"description": "Colección con CRUD completo para /clientes, /cuentas, /movimientos y reporte por fechas.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "35028706"
+	},
+	"item": [
+		{
+			"name": "Clientes",
+			"item": [
+				{
+					"name": "Listar clientes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status 200\", function () { pm.response.to.have.status(200); });"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{customer_service}}/clientes",
+							"host": [
+								"{{customer_service}}"
+							],
+							"path": [
+								"clientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear cliente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status 201\", function () { pm.response.to.have.status(201); });",
+									"const json = pm.response.json();",
+									"if (json && json.id) pm.collectionVariables.set(\"clientePk\", json.id.toString());",
+									"if (json && json.clienteId) pm.collectionVariables.set(\"clienteId\", json.clienteId);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"clienteId\":\"{{clienteId}}\",\n  \"nombre\":\"Prueba\",\n  \"genero\":\"M\",\n  \"edad\":32,\n  \"identificacion\":\"1717123454\",\n  \"direccion\":\"Otavalo sn y principal\",\n  \"telefono\":\"098254785\",\n  \"password\":\"1234\"\n}"
+						},
+						"url": {
+							"raw": "{{customer_service}}/clientes",
+							"host": [
+								"{{customer_service}}"
+							],
+							"path": [
+								"clientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener cliente por clienteId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status 200\", function () { pm.response.to.have.status(200); });"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{customer_service}}/clientes/{{clienteId}}",
+							"host": [
+								"{{customer_service}}"
+							],
+							"path": [
+								"clientes",
+								"{{clienteId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener cliente por id (PK)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status 200\", function () { pm.response.to.have.status(200); });"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{customer_service}}/clientes/id/{{clientePk}}",
+							"host": [
+								"{{customer_service}}"
+							],
+							"path": [
+								"clientes",
+								"id",
+								"{{clientePk}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar cliente (PUT por id)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status 200\", function () { pm.response.to.have.status(200); });"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"clienteId\":\"{{clienteId}}\",\n  \"nombre\":\"Jorge Mosquera (ACT)\",\n  \"genero\":\"M\",\n  \"edad\":33,\n  \"identificacion\":\"1717123456\",\n  \"direccion\":\"Dirección actualizada\",\n  \"telefono\":\"098254786\",\n  \"password\":\"1234\"\n}"
+						},
+						"url": {
+							"raw": "{{customer_service}}/clientes/id/{{clientePk}}",
+							"host": [
+								"{{customer_service}}"
+							],
+							"path": [
+								"clientes",
+								"id",
+								"{{clientePk}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar cliente (PUT por id) Estado",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status 200\", function () { pm.response.to.have.status(200); });"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{customer_service}}/clientes/desactivar/id/{{clientePk}}",
+							"host": [
+								"{{customer_service}}"
+							],
+							"path": [
+								"clientes",
+								"desactivar",
+								"id",
+								"{{clientePk}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar cliente (DELETE por id)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status 204\", function () { pm.response.to.have.status(204); });"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{customer_service}}/clientes/id/{{clientePk}}",
+							"host": [
+								"{{customer_service}}"
+							],
+							"path": [
+								"clientes",
+								"id",
+								"{{clientePk}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cuentas",
+			"item": [
+				{
+					"name": "Crear cuenta",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status 201\", function () { pm.response.to.have.status(201); });",
+									"const json = pm.response.json();",
+									"if (json && json.numero) pm.collectionVariables.set(\"cuentaNumero\", json.numero);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"numero\":\"{{cuentaNumero}}\",\n  \"tipo\":\"AHORROS\",\n  \"saldoInicial\":0.00,\n  \"clienteId\":\"{{clienteId}}\",\n  \"clienteNombre\":\"Juan Osorio\"\n}"
+						},
+						"url": {
+							"raw": "{{account_service}}/cuentas",
+							"host": [
+								"{{account_service}}"
+							],
+							"path": [
+								"cuentas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener cuenta",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status 200\", function () { pm.response.to.have.status(200); });"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{account_service}}/cuentas/{{cuentaNumero}}",
+							"host": [
+								"{{account_service}}"
+							],
+							"path": [
+								"cuentas",
+								"{{cuentaNumero}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar cuentas por cliente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status 200\", function () { pm.response.to.have.status(200); });"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{account_service}}/cuentas?clienteId={{clienteId}}",
+							"host": [
+								"{{account_service}}"
+							],
+							"path": [
+								"cuentas"
+							],
+							"query": [
+								{
+									"key": "clienteId",
+									"value": "{{clienteId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar cuenta (PUT)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status 200\", function () { pm.response.to.have.status(200); });"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"numero\":\"{{cuentaNumero}}\",\n  \"tipo\":\"CORRIENTE\",\n  \"saldoInicial\":150.00,\n  \"clienteId\":\"{{clienteId}}\",\n  \"clienteNombre\":\"Jose Lema (ACT)\"\n}"
+						},
+						"url": {
+							"raw": "{{account_service}}/cuentas/{{cuentaNumero}}",
+							"host": [
+								"{{account_service}}"
+							],
+							"path": [
+								"cuentas",
+								"{{cuentaNumero}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar cuenta (DELETE)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"204 o 409 según reglas\", function () { pm.expect([204,409]).to.include(pm.response.code); });"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{account_service}}/cuentas/{{cuentaNumero}}",
+							"host": [
+								"{{account_service}}"
+							],
+							"path": [
+								"cuentas",
+								"{{cuentaNumero}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Movimientos",
+			"item": [
+				{
+					"name": "Registrar depósito",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status 201\", function(){ pm.response.to.have.status(201); });",
+									"const json = pm.response.json();",
+									"if (json && json.id) pm.collectionVariables.set(\"movimientoId\", json.id.toString());"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fecha\": \"2025-08-08\",\n  \"tipo\": \"DEPOSITO\",\n  \"valor\": 575.00\n}"
+						},
+						"url": {
+							"raw": "{{account_service}}/movimientos?cuenta={{cuentaNumero}}",
+							"host": [
+								"{{account_service}}"
+							],
+							"path": [
+								"movimientos"
+							],
+							"query": [
+								{
+									"key": "cuenta",
+									"value": "{{cuentaNumero}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Registrar retiro (puede dar 400)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"201 o 400\", function(){ pm.expect([201,400]).to.include(pm.response.code); });"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fecha\": \"2025-08-08\",\n  \"tipo\": \"RETIRO\",\n  \"valor\": -10000.00\n}"
+						},
+						"url": {
+							"raw": "{{account_service}}/movimientos?cuenta={{cuentaNumero}}",
+							"host": [
+								"{{account_service}}"
+							],
+							"path": [
+								"movimientos"
+							],
+							"query": [
+								{
+									"key": "cuenta",
+									"value": "{{cuentaNumero}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener movimiento por id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status 200\", function(){ pm.response.to.have.status(200); });"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{account_service}}/movimientos/{{movimientoId}}",
+							"host": [
+								"{{account_service}}"
+							],
+							"path": [
+								"movimientos",
+								"{{movimientoId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar movimientos por cuenta",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status 200\", function(){ pm.response.to.have.status(200); });"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{account_service}}/movimientos?cuenta={{cuentaNumero}}",
+							"host": [
+								"{{account_service}}"
+							],
+							"path": [
+								"movimientos"
+							],
+							"query": [
+								{
+									"key": "cuenta",
+									"value": "{{cuentaNumero}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar movimiento (PUT, fecha/tipo)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status 200\", function(){ pm.response.to.have.status(200); });"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fecha\": \"2025-08-09\",\n  \"tipo\": \"DEPOSITO\"\n}"
+						},
+						"url": {
+							"raw": "{{account_service}}/movimientos/{{movimientoId}}",
+							"host": [
+								"{{account_service}}"
+							],
+							"path": [
+								"movimientos",
+								"{{movimientoId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar movimiento (DELETE)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"204 o 409 (si no es el último)\", function(){ pm.expect([204,409]).to.include(pm.response.code); });"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{account_service}}/movimientos/{{movimientoId}}",
+							"host": [
+								"{{account_service}}"
+							],
+							"path": [
+								"movimientos",
+								"{{movimientoId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reportes",
+			"item": [
+				{
+					"name": "Reporte por fechas y cliente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status 200\", function(){ pm.response.to.have.status(200); });"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{account_service}}/reportes?clienteId={{clienteId}}&desde={{desde}}&hasta={{hasta}}",
+							"host": [
+								"{{account_service}}"
+							],
+							"path": [
+								"reportes"
+							],
+							"query": [
+								{
+									"key": "clienteId",
+									"value": "{{clienteId}}"
+								},
+								{
+									"key": "desde",
+									"value": "{{desde}}"
+								},
+								{
+									"key": "hasta",
+									"value": "{{hasta}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "customer_service",
+			"value": "http://localhost:8081"
+		},
+		{
+			"key": "account_service",
+			"value": "http://localhost:8082"
+		},
+		{
+			"key": "clienteId",
+			"value": "CLI001"
+		},
+		{
+			"key": "clientePk",
+			"value": "1"
+		},
+		{
+			"key": "cuentaNumero",
+			"value": "ACC001"
+		},
+		{
+			"key": "movimientoId",
+			"value": "1"
+		},
+		{
+			"key": "desde",
+			"value": "2025-08-01"
+		},
+		{
+			"key": "hasta",
+			"value": "2025-08-31"
+		}
+	]
+}
