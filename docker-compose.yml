@@ -34,8 +34,8 @@ services:
       POSTGRES_DB: customerdb
       POSTGRES_USER: user
       POSTGRES_PASSWORD: pass
-    #ports:
-    #  - "5432:5432"
+    ports:
+      - "15432:5432"
     networks: [app-net]
     volumes:
       - pg_customer_data:/var/lib/postgresql/data
@@ -53,7 +53,7 @@ services:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: pass
     ports:
-      - "5433:5432"
+      - "15433:5432"
     networks: [app-net]
     volumes:
       - pg_account_data:/var/lib/postgresql/data

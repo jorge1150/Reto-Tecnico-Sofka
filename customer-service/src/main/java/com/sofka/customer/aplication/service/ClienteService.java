@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 import com.sofka.customer.api.dto.ClienteRequest;
 import com.sofka.customer.api.dto.ClienteResponse;
 import com.sofka.customer.api.mapper.ClienteMapper;
+import com.sofka.customer.domain.event.ClienteActualizadoEvent;
 import com.sofka.customer.domain.model.Cliente;
 import com.sofka.customer.domain.repository.IClienteRepository;
+import com.sofka.customer.infrastructure.messaging.ClienteEventPublisher;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +26,7 @@ public class ClienteService {
 
 	private final IClienteRepository repo; // puerto de dominio
 	private final ClienteMapper mapper; // DTO <-> Entidad
+	private final ClienteEventPublisher eventPublisher;
 
 	public ClienteResponse crear(ClienteRequest request) {
 		if (repo.existsByIdentificacion(request.getIdentificacion())) {
@@ -31,6 +34,8 @@ public class ClienteService {
 		}
 		Cliente entity = mapper.toEntity(request);
 		Cliente saved = repo.save(entity);
+		eventPublisher.publicarClienteActualizado(
+				new ClienteActualizadoEvent(saved.getClienteId(), saved.getNombre(), saved.getEstado()));
 		return mapper.toResponse(saved);
 	}
 
@@ -42,8 +47,10 @@ public class ClienteService {
 		c.setEdad(req.getEdad());
 		c.setDireccion(req.getDireccion());
 		c.setTelefono(req.getTelefono());
-
-		return mapper.toResponse(repo.save(c));
+		Cliente updated = repo.save(c);
+		eventPublisher.publicarClienteActualizado(
+				new ClienteActualizadoEvent(updated.getClienteId(), updated.getNombre(), updated.getEstado()));
+		return mapper.toResponse(updated);
 	}
 
 	public ClienteResponse obtenerPorId(Long id) {

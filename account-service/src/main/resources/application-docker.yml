@@ -11,6 +11,12 @@ spring:
       ddl-auto: update
   kafka:
     bootstrap-servers: kafka:9092
+    consumer:
+      group-id: account-service
+      properties:
+        spring.json.trusted.packages: "*"
+        spring.json.use.type.headers: false
+        spring.json.value.default.type: com.sofka.account.domain.event.ClienteActualizadoEvent
 management:
   endpoints:
     web:
