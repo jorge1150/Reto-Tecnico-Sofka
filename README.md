@@ -137,8 +137,6 @@ spring:
         spring.json.value.default.type: com.sofka.account.api.event.ClienteActualizadoEvent
 ```
 
-> **Importante:** evita **claves duplicadas** en YAML (`DuplicateKeyException`). Cada propiedad debe aparecer **una sola vez** dentro de `properties:`.
-
 ### Probar el flujo
 1) Crea cliente y cuenta (ver “Ejemplos rápidos”).  
 2) **Actualiza** el nombre del cliente (dispara evento):
