@@ -1,17 +1,18 @@
 package com.sofka.account;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.*;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Testcontainers;
+
+import com.sofka.account.infrastructure.messaging.ClienteEventConsumer;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -19,7 +20,9 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, properties = {
+		"spring.kafka.listener.auto-startup=false"
+})
 @Testcontainers
 class AccountServiceApplicationTests {
 
@@ -27,6 +30,9 @@ class AccountServiceApplicationTests {
 	int port;
 	@Autowired
 	TestRestTemplate rest;
+
+	@MockBean
+	ClienteEventConsumer clienteEventConsumer;
 
 	static PostgreSQLContainer<?> pg = new PostgreSQLContainer<>("postgres:16-alpine")
 			.withDatabaseName("accountdb")

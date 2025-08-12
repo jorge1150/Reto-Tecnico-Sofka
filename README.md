@@ -233,18 +233,18 @@ Archivo consolidado: **`BaseDatos.sql`** (incluido).
 ## Tests
 
 ### Unitario (customer-service)
-- `ClienteServiceTest` con **Mockito**: creación OK y rechazo de identificación duplicada.
+- `CustomerServiceApplicationTests` con **Mockito**: creación OK y rechazo de identificación duplicada.
 
 ### Integración HTTP (account-service)
-- `MovimientoApiIntegrationTest` con **Testcontainers/PostgreSQL**: crea cuenta, depósito OK, **400** en retiro sin saldo, y reporte OK.
+- `AccountServiceApplicationTests` con **Testcontainers/PostgreSQL**: crea cuenta, depósito OK, **400** en retiro sin saldo, y reporte OK.
 
 ### Integración **Kafka embebido** (account-service)
 - `ClienteEventIntegrationTest` con **@EmbeddedKafka** + **Awaitility**: publica `ClienteActualizadoEvent` y verifica que el listener actualiza el snapshot en DB (H2 en memoria para el test).
 
 Ejecutar local (si tienes JDK/Maven):
 ```bash
-cd customer-service && mvn -q -Dtest=ClienteServiceTest test
-cd ../account-service && mvn -q -Dtest=MovimientoApiIntegrationTest test
+cd customer-service && mvn -q -Dtest=CustomerServiceApplicationTests test
+cd ../account-service && mvn -q -Dtest=AccountServiceApplicationTests test
 cd ../account-service && mvn -q -Dtest=ClienteEventIntegrationTest test
 ```
 
