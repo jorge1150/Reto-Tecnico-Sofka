@@ -119,7 +119,7 @@ spring:
 ```
 
 ### Consumer (account-service)
-- `@KafkaListener(topics = "${app.topics.customer-events:customer.events.v1}", ...)`
+- `@KafkaListener(topics = "${app.topics.customer-events:customer.events}", ...)`
 - Actualiza el snapshot de todas las cuentas del `clienteId` recibido.
 - **Deserialización robusta** (evita errores por FQN distinto entre servicios):
 ```yaml
