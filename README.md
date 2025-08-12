@@ -263,7 +263,7 @@ cd ../account-service && mvn -q -Dtest=ClienteEventIntegrationTest test
 
 ---
 
-## Notas de diseño (para defender en entrevista)
+## Notas de diseño
 
 - **Arquitectura limpia**: dominio independiente de framework; application encapsula reglas; controllers delgados.
 - **Repository + adaptadores JPA**: puedes cambiar persistencia sin tocar dominio/application.
