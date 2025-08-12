@@ -256,7 +256,6 @@ cd ../account-service && mvn -q -Dtest=ClienteEventIntegrationTest test
 - **Kafka/Zookeeper unhealthy** → en dev, usa `condition: service_started` o KRaft; reinicia si es necesario.
 - **`Schema-validation: missing table`** → en dev usa `ddl-auto: update` o aplica SQL/Flyway antes.
 - **`LazyInitializationException` en `/reportes`** → solucionado con `@EntityGraph` y `@Transactional(readOnly=true)`.
-- **DuplicateKeyException (YAML)** → no repitas la misma clave debajo de `properties:`; YAML no admite duplicados.
 - **RecordDeserializationException (Kafka)** → usa `spring.json.use.type.headers=false` + `spring.json.value.default.type` (ver sección Kafka).
 
 ---
